@@ -43,7 +43,13 @@ public class Controller {
      * @param isEntier true si les opérandes sont des entiers, false si ce sont des réels
      */
     public void additionne(String a, String b, boolean isEntier) {
-
+        if (isEntier) {
+            int result = serviceMath.additionne(Integer.parseInt(a), Integer.parseInt(b));
+            view.affiche(String.valueOf(result));
+        } else {
+            double result = serviceMath.additionne(Double.parseDouble(a), Double.parseDouble(b));
+            view.affiche(String.valueOf(result));
+        }
     }
 
     /**
@@ -58,6 +64,12 @@ public class Controller {
      * @param isEntier true si les opérandes sont des entiers, false si ce sont des réels
      */
     public void soustrait(String a, String b, boolean isEntier) {
-
+		if (isEntier) {
+            int result = serviceMath.soustrait(Integer.parseInt(a), Integer.parseInt(b));
+            view.affiche(String.valueOf(result));
+        } else {
+            double result = serviceMath.soustrait(Double.parseDouble(a), Double.parseDouble(b));
+            view.affiche(String.valueOf(result));
+        }
     }
 }
