@@ -61,31 +61,20 @@ public class View implements Initializable {
      */
     public void start() {
 
-        /*
-         * Callback pour le ControllerFactory, quand JavaFX voudra créer le
-         * controlleur de vue, viendra dans ce callback et donnera l'instance
-         * déjà créée au lieu d'en faire une nouvelle.
-         */
-        Callback<Class<?>, Object> controllerFactory = type -> {
-            return this;
-        };
-
-        // Seulement si JDK <= 8 (il faudra faire un « fix imports » !)
-        PlatformImpl.startup(() -> {
-            // Seulement si JDK > 8 (il faudra faire un « fix imports » !), nouvelle méthode
-            // standardisée par Java
-            // Platform.startup(() -> {
+        Platform.startup(() -> {
             try {
-                Stage stage = new Stage();
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxml));
-                fxmlLoader.setControllerFactory(controllerFactory);
+                Stage mainStage = new Stage();
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("view.fxml"));
+                fxmlLoader.setControllerFactory(type -> {
+                    return this;
+                });
                 Parent root = (Parent) fxmlLoader.load();
-                Scene scene = new Scene(root);
-                stage.setScene(scene);
-                stage.setTitle("D08 - Calculatrice");
-                stage.show();
+                Scene principalScene = new Scene(root);
+                mainStage.setScene(principalScene);
+                mainStage.setTitle("D08 - Calculatrice");
+                mainStage.show();
             } catch (IOException ex) {
-                System.out.println("Can't start the IHM because : " + ex);
+                ex.printStackTrace();
                 Platform.exit();
             }
         });
